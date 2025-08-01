@@ -13,7 +13,7 @@
     <header class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center">
-                <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="h-12 w-auto">
+                <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="w-auto">
             </div>
         </div>
     </header>
@@ -38,5 +38,14 @@
 
         @yield('content')
     </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-sm text-gray-500">
+                Copyright © 2020 All Rights Reserved.
+            </p>
+        </div>
+    </footer>
 </body>
 </html>
