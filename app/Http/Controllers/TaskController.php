@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\TaskServiceInterface;
+use App\Http\Requests\StoreTaskRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -26,14 +27,10 @@ class TaskController extends Controller
     /**
      * Store a new task.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StoreTaskRequest $request): RedirectResponse
     {
-        $request->validate([
-            'description' => 'required|string|max:255',
-        ]);
-
         $this->taskService->create([
-            'description' => $request->description,
+            'description' => $request->validated()['description'],
         ]);
 
         return redirect()->route('tasks.index')
