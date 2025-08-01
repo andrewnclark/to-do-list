@@ -31,23 +31,16 @@
     <!-- Right Column: Tasks Table (2/3 width) -->
     <div class="col-span-2">
         <div class="bg-white rounded-lg shadow-sm border border-gray-200">
-            <div class="px-6 py-4 border-b border-gray-200">
-                <h2 class="text-lg font-semibold text-gray-900">Tasks</h2>
-            </div>
-            
             @if($tasks->count() > 0)
                 <div class="overflow-hidden">
                     <table class="min-w-full divide-y divide-gray-200">
-                        <thead class="bg-gray-50">
+                        <thead class="bg-white border-b-2 border-gray-300">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Description
+                                <th class="px-3 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-16">
+                                    #
                                 </th>
                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Status
-                                </th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Created
+                                    Task
                                 </th>
                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                     Actions
@@ -55,26 +48,15 @@
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
-                            @foreach($tasks as $task)
+                            @foreach($tasks as $index => $task)
                                 <tr class="hover:bg-gray-50">
+                                    <td class="px-3 py-4 whitespace-nowrap text-sm font-medium text-gray-900 w-16">
+                                        {{ $index + 1 }}
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm text-gray-900 {{ $task->is_completed ? 'line-through text-gray-500' : '' }}">
                                             {{ $task->description }}
                                         </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if($task->is_completed)
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                                Completed
-                                            </span>
-                                        @else
-                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                                                Pending
-                                            </span>
-                                        @endif
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $task->created_at->format('M j, Y') }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                         <div class="flex items-center justify-end space-x-2">
@@ -84,10 +66,10 @@
                                                     @method('PATCH')
                                                     <button 
                                                         type="submit"
-                                                        class="text-green-600 hover:text-green-900 transition duration-200"
+                                                        class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded text-xs transition duration-200"
                                                         title="Mark as Complete"
                                                     >
-                                                        ✓ Complete
+                                                        ✓
                                                     </button>
                                                 </form>
                                             @endif
@@ -97,11 +79,11 @@
                                                 @method('DELETE')
                                                 <button 
                                                     type="submit"
-                                                    class="text-red-600 hover:text-red-900 transition duration-200"
+                                                    class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition duration-200"
                                                     onclick="return confirm('Are you sure you want to delete this task?')"
                                                     title="Delete Task"
                                                 >
-                                                    ✕ Delete
+                                                    ✕
                                                 </button>
                                             </form>
                                         </div>
