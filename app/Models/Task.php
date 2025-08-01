@@ -16,11 +16,8 @@ class Task extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
         'description',
         'is_completed',
-        'priority',
-        'due_date',
     ];
 
     /**
@@ -32,7 +29,6 @@ class Task extends Model
     {
         return [
             'is_completed' => 'boolean',
-            'due_date' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -54,22 +50,7 @@ class Task extends Model
         return $query->where('is_completed', false);
     }
 
-    /**
-     * Scope a query to only include overdue tasks.
-     */
-    public function scopeOverdue($query)
-    {
-        return $query->where('due_date', '<', now())
-                    ->where('is_completed', false);
-    }
 
-    /**
-     * Scope a query to order tasks by priority.
-     */
-    public function scopeByPriority($query)
-    {
-        return $query->orderBy('priority', 'desc');
-    }
 
     /**
      * Mark the task as completed.
@@ -87,42 +68,13 @@ class Task extends Model
         $this->update(['is_completed' => false]);
     }
 
-    /**
-     * Check if the task is overdue.
-     */
-    public function isOverdue(): bool
-    {
-        return $this->due_date && 
-               $this->due_date->isPast() && 
-               !$this->is_completed;
-    }
 
-    /**
-     * Get the priority label.
-     */
-    public function getPriorityLabelAttribute(): string
-    {
-        return match($this->priority) {
-            3 => 'High',
-            2 => 'Medium',
-            1 => 'Low',
-            default => 'Normal'
-        };
-    }
 
     /**
      * Get the status label.
      */
     public function getStatusLabelAttribute(): string
     {
-        if ($this->is_completed) {
-            return 'Completed';
-        }
-        
-        if ($this->isOverdue()) {
-            return 'Overdue';
-        }
-        
-        return 'Pending';
+        return $this->is_completed ? 'Completed' : 'Pending';
     }
 }
